@@ -1,0 +1,22 @@
+
+
+Procedure:
+
+1. Initiate Connector
+2. Connector 
+
+
+
+Connector:
+Connector only handles the connection between client and backend.
+Connector can be initiated by passing two anonymous functions.
+
+
+
+Game Resources:
+
+1. Terrian information
+2. Character information
+3. 
+
+
