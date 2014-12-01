@@ -10,8 +10,8 @@ socket.on('connect', function() {
 	socket.on('message', function(message) {
 		console.log('#Receive data: ' + data.toString());
 	});
-	socket.sendMessage({msg: 'This is client.'}, function(success){
-		console.log('SendMessage result: ' + success);
+	socket.sendMessage({msg: 'This is client.'}, function(){
+		console.log('Data flushed.');
 	});
 
 

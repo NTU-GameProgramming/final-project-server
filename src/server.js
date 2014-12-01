@@ -17,9 +17,9 @@ server.on('connection', function(socket) { // socket is a standard net.Socket
 		console.log('#Receive data: ' + data.toString());
 	});
 
-/*	socket.sendMessage({msg: 'Hello Node.js'}, function(err){
-		console.log('Error' + err.message);
-	});*/
+	socket.sendMessage({msg: 'Hello Node.js'}, function(){
+		console.log('Data flushed.');
+	});
 });
 
 server.listen(port);

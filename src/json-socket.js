@@ -16,16 +16,19 @@ var JsonSocket = function(socket) {
 module.exports = JsonSocket;
 
 JsonSocket.prototype = {
-	ERROR: {
-		ERR_INVALID_CONTENT: 0
+	CODE: {
+		ERROR_INVALID_CONTENT: 0,
+		ERROR_INVALID_CONTENT_LENGTH: 1,
+		ERROR_INVALID_JSON: 2
 	}, _onData: function(data) {
 		console.log('data received: ' + data.toString());
 		data = data.toString();
 		try {
 			this._handleData(data);
 		} catch(e) {
-			console.log(e.message);
-			this.sendError(e);
+			if(e.code == this.CODE.ERROR_INVALID_JSON) {
+				this.sendError(e);
+			}
 		}
 	}, _handleData: function(data) {
 		this._buffer += data;
@@ -39,14 +42,14 @@ JsonSocket.prototype = {
 					this._content_length = -1;
 					this._buffer = '';
 					var err = new Error('Invalid content length (' + raw_content_length + ') in: ' + this._buffer);
-					err.code = "E_INVALID_CONTENT_LENGTH";
+					err.code = this.CODE.ERROR_INVALID_CONTENT_LENGTH;
 					throw err;
 				}
 				this._buffer = this._buffer.substring(i+1);
 			}
 		}
 		if(this._content_length != -1) { // receive raw JSON string data
-			if(this._buffer.length == this._contentLength) {
+			if(this._buffer.length == this._content_length) {
 				this._handleMessage(this._buffer);
 			} else if(this._buffer.length > this._content_length) {
 				var message = this._buffer.substring(0, this._content_length);
@@ -62,11 +65,11 @@ JsonSocket.prototype = {
 		try {
 			message = JSON.parse(data);
 		} catch(e) {
-			var err = new Error('Could not parse JSON: ' + e.message + '\n Request data: ' + data);
-			err.code = 'E_INVALID_JSON';
+			var err = new Error('Could not parse JSON: ' + e.message + '\nRequest data: ' + data);
+			err.code = this.CODE.ERROR_INVALID_JSON;
 			throw err;
 		}
-		console.log('parsed')
+		console.log('parsed' + message);
 		this._socket.emit('message', message);
 	}, _onClose: function() {
 		this._closed = true;
@@ -77,8 +80,9 @@ JsonSocket.prototype = {
 	}, sendMessage: function(message, callback) {
 		if(this._closed) {
 			if(callback) {
-				console.log('err');
-				callback(new Error('The socket is closed.'));
+				var err = new Error('The socket is closed.');
+				err.
+				callback(err);
 			}
 		} else {
 			this._socket.write(this._formatMessageData(message), 'utf-8', callback);
