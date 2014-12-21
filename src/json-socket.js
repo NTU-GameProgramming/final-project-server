@@ -10,7 +10,6 @@ var JsonSocket = function(socket) {
 	socket.on('close', this._onClose.bind(this));
 	socket.on('error', this._onError.bind(this));
 
-
 };
 
 module.exports = JsonSocket;
@@ -69,7 +68,7 @@ JsonSocket.prototype = {
 			err.code = this.CODE.ERROR_INVALID_JSON;
 			throw err;
 		}
-		console.log('parsed' + message);
+//		console.log('parsed' + JSON.stringify(message));
 		this._socket.emit('message', message);
 	}, _onClose: function() {
 		this._closed = true;
