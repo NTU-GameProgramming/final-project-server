@@ -1,0 +1,19 @@
+{
+  "name": "BillowCloud",
+  "version": "0.0.0",
+  "description": "Billow Cloud Taiwan Official Website",
+  "main": "start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Billow",
+    "Cloud"
+  ],
+  "author": "Hsu, Tien-Yiao",
+  "license": "ISC",
+  "dependencies": {
+	  "express": "4.x",
+	  "ejs": "1.x"
+  }
+}
