@@ -1,9 +1,7 @@
-var fs = require('fs');
 var net = require('net');
 var JsonSocket = require('./lib/json-socket');
 var GameTree = require('./lib/Game/game-tree');
-var ClientManager = require('./lib/client_manager');
-//var Connector = require('connector')
+var ClientManager = require('./lib/client-manager');
 
 
 var port = 8976;
