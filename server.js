@@ -7,15 +7,17 @@ var ClientManager = require('./lib/client_manager');
 
 
 var port = 8976;
+for(var key in process.argv) {
+	console.log("process.argv[" + key + "] = " + process.argv[key]);
+}
 
+var players = process.argv[2] || "2";
+players = parseInt(players,10);
 
 // Create a game
 var server = net.createServer();
-console.log('This is game server for NTU-Game_Programming-2014 Fall');
 var game_tree = new GameTree();
-
-cm = new ClientManager();
-
+cm = new ClientManager(game_tree, players);
 
 server.on('connection', function(socket) { // socket is a standard net.Socket
 	console.log("[Server] Got connection.");
@@ -25,4 +27,7 @@ server.on('connection', function(socket) { // socket is a standard net.Socket
 		console.log('Data flushed.');
 	});*/
 });
+
+console.log('This is game server for NTU-Game_Programming-2014 Fall');
+console.log('Players: ' + players);
 server.listen(port);
