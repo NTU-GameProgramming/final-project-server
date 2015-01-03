@@ -27,5 +27,6 @@ server.on('connection', function(socket) { // socket is a standard net.Socket
 });
 
 console.log('This is game server for NTU-Game_Programming-2014 Fall');
+console.log('Port: '+ port);
 console.log('Players: ' + players);
 server.listen(port);
