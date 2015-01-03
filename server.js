@@ -2,7 +2,7 @@ var net = require('net');
 var JsonSocket = require('./lib/json-socket');
 var GameTree = require('./lib/Game/game-tree');
 var ClientManager = require('./lib/client-manager');
-
+var FightSystem = require('./lib/Game/fight-system');
 
 var port = 8976;
 for(var key in process.argv) {
@@ -15,7 +15,8 @@ players = parseInt(players,10);
 // Create a game
 var server = net.createServer();
 var game_tree = new GameTree();
-cm = new ClientManager(game_tree, players);
+var fight_system = new FightSystem(game_tree, 500.0, 15.0, 20.0);
+cm = new ClientManager(game_tree, fight_system, players);
 
 server.on('connection', function(socket) { // socket is a standard net.Socket
 	console.log("[Server] Got connection.");
